@@ -25,7 +25,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "target_frame",
         nargs="?",
-        default="ur3e_base",
+        default="base",
         help="Target frame used in tf_buffer.lookup_transform(target_frame, source_frame, time).",
     )
     parser.add_argument(

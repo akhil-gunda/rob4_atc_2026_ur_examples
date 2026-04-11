@@ -51,14 +51,14 @@ def main() -> None:
     )
 
     target_pose = PoseStamped()
-    target_pose.header.frame_id = "ur3e_base"
-    target_pose.pose.position.x = 0.4
-    target_pose.pose.position.y = 0.0
-    target_pose.pose.position.z = 0.4
+    target_pose.header.frame_id = "base"   
+    target_pose.pose.position.x = -0.1
+    target_pose.pose.position.y = -0.3
+    target_pose.pose.position.z = 0.6
     target_pose.pose.orientation.w = 1.0
 
     target_wrench = WrenchStamped()
-    target_wrench.header.frame_id = "ur3e_tool0"
+    target_wrench.header.frame_id = "tool0"
 
     node.get_logger().info("Publishing cartesian compliance targets...")
     now = node.get_clock().now().to_msg()

@@ -19,7 +19,7 @@ def main() -> None:
     )
 
     target = PoseStamped()
-    target.header.frame_id = "ur5e_base"
+    target.header.frame_id = "base"
     target.pose.position.x = -0.2
     target.pose.position.y = -0.23
     target.pose.position.z = 0.6

@@ -41,7 +41,7 @@ class CartesianMotionSender:
             10,
         )
 
-        self.target_frame_id = "ur5e_base"
+        self.target_frame_id = "base"
         self.target_x = -0.2
         self.target_y = -0.23
         self.target_z = 0.5
