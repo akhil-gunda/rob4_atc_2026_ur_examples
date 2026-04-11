@@ -3,11 +3,16 @@
 
   <!--First, include the macro from our custom description-->
   <xacro:include filename="$(find ur_atc_robot_cell_description)/urdf/my_robot_cell_macro.xacro"/>
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur_joint_control.xacro" />
+  
+  <xacro:include filename="$(find ur_simulation_gz)/urdf/ur_gz.ros2_control.xacro" />
+ 
   <!--The driver already provides a control tag for the UR arm, we can directly include-->
-  <xacro:include filename="$(find ur_robot_driver)/urdf/ur.ros2_control.xacro"/>
+  <!-- <xacro:include filename="$(find ur_robot_driver)/urdf/ur.ros2_control.xacro"/> -->
 
   <!--We need to specify the arguments used for parametrizing our description-->
   <xacro:arg name="ur_type" default="ur5e"/>
+  <xacro:arg name="tf_prefix" default="" />
   <xacro:arg name="joint_limit_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"/>
   <xacro:arg name="kinematics_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"/>
   <xacro:arg name="physical_parameters_file" default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"/>
@@ -20,6 +25,9 @@
   <xacro:arg name="ur_input_recipe_filename" default="$(find ur_robot_driver)/resources/rtde_input_recipe.txt"/>
   <xacro:arg name="use_mock_hardware" default="false" />
   <xacro:arg name="mock_sensor_commands" default="false" />
+  <xacro:arg name="transmission_hw_interface" default=""/>
+  <xacro:arg name="simulation_controllers" default=""/>
+  <xacro:arg name="ros_namespace" default=""/>
 
   <link name="world" />
 
@@ -27,6 +35,7 @@
   <xacro:my_robot_cell
     parent="world"
     ur_type="$(arg ur_type)"
+    tf_prefix="$(arg tf_prefix)"
     joint_limits_parameters_file="$(arg joint_limit_parameters_file)"
     kinematics_parameters_file="$(arg kinematics_parameters_file)"
     physical_parameters_file="$(arg physical_parameters_file)"
@@ -38,16 +47,31 @@
   <!--Create the control tag for the UR robot-->
   <xacro:ur_ros2_control
     name="$(arg ur_type)"
-    tf_prefix="$(arg ur_type)_"
-    kinematics_parameters_file="$(arg kinematics_parameters_file)"
-    robot_ip="$(arg robot_ip)"
-    script_filename="$(arg ur_script_filename)"
-    output_recipe_filename="$(arg ur_output_recipe_filename)"
-    input_recipe_filename="$(arg ur_input_recipe_filename)"
-    use_mock_hardware="$(arg use_mock_hardware)"
-    mock_sensor_commands="$(arg mock_sensor_commands)"
-    headless_mode="$(arg headless_mode)"
+    tf_prefix="$(arg tf_prefix)"
+    transmission_hw_interface="$(arg transmission_hw_interface)"
   />
+
+  <gazebo reference="world">
+  </gazebo>
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(arg simulation_controllers)</parameters>
+      <ros>
+        <namespace>$(arg ros_namespace)</namespace>
+      </ros>
+    </plugin>
+  </gazebo>
+    
+
+  <!-- <ros2_control name="$(arg ur_type)" type="system">
+        <hardware>
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </hardware>
+
+        <xacro:ur_joint_control_description
+          tf_prefix="$(arg ur_type)_"
+        />
+  </ros2_control> -->
 
   <!--If you had more controlled devices in your description, e.g. a gripper, you can add another ros2_control tag here-->
 
