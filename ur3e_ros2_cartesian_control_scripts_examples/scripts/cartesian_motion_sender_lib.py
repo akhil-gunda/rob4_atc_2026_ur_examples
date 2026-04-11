@@ -277,7 +277,7 @@ class CartesianMotionSender:
         self.b_busy = True
         self.active_target = self.build_target()
         self.reach_deadline_ns = (
-            self.node.get_clock().now().nanoseconds + int(self.reach_timeout_sec * 1e9)
+            self.node.get_clock().now().nanoseconds + int(self.reach_timeout_sec * 5e9)
         )
 
         if wait_for_ready and not self.wait_until_ready():
