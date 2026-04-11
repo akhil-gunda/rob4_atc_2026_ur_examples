@@ -2,12 +2,13 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
   <xacro:include filename="$(find ur_atc_robot_cell_description)/urdf/tool_rack.xacro"/>
-  <xacro:include filename="$(find ur_atc_robot_cell_description)/urdf/gripper_side_TC.xacro" />
+  <xacro:include filename="$(find ur_atc_robot_cell_description)/urdf/gripper_side_tc_scad.xacro" />
 
   <xacro:macro name="my_robot_cell" params="
     parent
     *origin
     ur_type
+    tf_prefix
     joint_limits_parameters_file
     kinematics_parameters_file
     physical_parameters_file
@@ -29,7 +30,8 @@
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://ur_atc_robot_cell_description/meshes/table.dae"/>
+          <!-- <mesh filename="package://ur_atc_robot_cell_description/meshes/table.dae"/> -->
+          <box size="1.5 1.55 0.84" />
         </geometry>
         <origin rpy="0 0 0" xyz="0.75 0.775 -0.84"/>
       </collision>
@@ -49,7 +51,7 @@
     <!--This will create the specific robot-->
     <xacro:ur_robot
       name="${ur_type}"
-      tf_prefix="${ur_type}_"
+      tf_prefix="${tf_prefix}"
       parent="robot_mount"
       joint_limits_parameters_file="${joint_limits_parameters_file}"
       kinematics_parameters_file="${kinematics_parameters_file}"
@@ -62,7 +64,7 @@
     <xacro:property name="tool_rack_x_dist" value="0.77" />
     <xacro:property name="tool_rack_y_dist" value="0.23" />
     <link name="tool_rack_base"/>
-    <joint name="tool_rack_base" type="fixed">
+    <joint name="tool_rack_base_joint" type="fixed">
       <parent link="table" />
       <child link="tool_rack_base" />
       <origin xyz="${tool_rack_x_dist} ${tool_rack_y_dist} 0" rpy="0 0 0" />
