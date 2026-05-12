@@ -39,6 +39,12 @@
                 </geometry>
                 <material name="blue" />
             </visual>
+            <collision>
+                <origin xyz="0 0 ${C/2}" rpy="0 0 0" />
+                <geometry>
+                    <box size="${D1} ${C} ${C}" />
+                </geometry>
+            </collision>
         </link>
 
         <link name="ground2_link">
@@ -49,6 +55,12 @@
                 </geometry>
                 <material name="blue" />
             </visual>
+            <collision>
+                <origin xyz="0 ${W} ${C/2}" rpy="0 0 0" />
+                <geometry>
+                    <box size="${D1} ${C} ${C}" />
+                </geometry>
+            </collision>
         </link>
 
 
@@ -60,6 +72,12 @@
                 </geometry>
                 <material name="green" />
             </visual>
+            <collision>
+                <origin xyz="0 0 ${H/2}" rpy="0 0 0" />
+                <geometry>
+                    <box size="${C} ${C} ${H}" />
+                </geometry>
+            </collision>
         </link>
 
         <link name="vertical2_link">
@@ -70,6 +88,12 @@
                 </geometry>
                 <material name="green" />
             </visual>
+            <collision>
+                <origin xyz="0 ${W} ${H/2}" rpy="0 0 0" />
+                <geometry>
+                    <box size="${C} ${C} ${H}" />
+                </geometry>
+            </collision>
         </link>
 
         <link name="horizontal_link">
@@ -80,6 +104,12 @@
                 </geometry>
                 <material name="red" />
             </visual>
+            <collision>
+                <origin xyz="0 ${W/2} ${H}" rpy="0 0 0" />
+                <geometry>
+                    <box size="${C} ${W} ${C}" />
+                </geometry>
+            </collision>
         </link>
 
         <link name="air_link">
@@ -90,6 +120,12 @@
                 </geometry>
                 <material name="blue" />
             </visual>
+            <collision>
+                <origin xyz="${D2/2} ${W/3} ${H}" rpy="0 0 0" />
+                <geometry>
+                    <box size="${D2} ${C} ${C}" />
+                </geometry>
+            </collision>
         </link>
 
         <link name="ratelier_link"/>

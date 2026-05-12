@@ -22,6 +22,10 @@ from launch.substitutions import (
 def generate_launch_description():
 
     pkg_robot_cell_desc = get_package_share_directory('ur_atc_robot_cell_description')
+    workspace_share_path = os.path.join(pkg_robot_cell_desc, '..')
+    current_gz_path = os.environ.get('GZ_SIM_RESOURCE_PATH', '')
+    if workspace_share_path not in current_gz_path:
+        os.environ['GZ_SIM_RESOURCE_PATH'] = f"{workspace_share_path}:{current_gz_path}"
 
     gz_resource_path = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
@@ -124,7 +128,7 @@ def generate_launch_description():
         launch_arguments={
             "ur_type": ur_type,
             "tf_prefix": tf_prefix,
-            # "simulation_gz": "true",
+            "simulation_gz": "true",
             "description_file": description_file,
             "controllers_file": controllers_file,
         }.items(),

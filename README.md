@@ -69,6 +69,12 @@ ros2 Mock ur_atc_robot_cell_control start_robot.launch.py  ur_type:=ur5e use_moc
 ros2 launch ur_atc_robot_cell_control start_robot.launch.py ur_type:=ur5e robot_ip:=<robot-ip>
 ```
 
+```sh
+# Gazebo
+ros2 launch ur_atc_robot_cell_control start_robot.launch.py ur_type:=ur5e hardware_protocol:=gazebo
+```
+NOTE: Collisions are not working in Gazebo, problems with DART physics engine not being able to read STL meshes for collision geometry. Tried Openscad primitives, failed due to same incompatibility.
+
 ### Run controllers (separate terminal)
 ```sh
 # joint_trajectory_controller
@@ -83,6 +89,25 @@ ros2 run ur3e_ros2_cartesian_control_scripts_examples cartesian_motion_sender
 # cartesian_compliance_controller
 ros2 run ur3e_ros2_cartesian_control_scripts_examples cartesian_compliance_sender
 ```
+
+Another way to run controllers is to use this RQT tool - rqt_joint_trajectory_controller. Install if it is not done already:
+
+```sh
+sudo apt install ros-jazzy-rqt-joint-trajectory-controller
+```
+
+Run the controller:
+
+```sh
+ros2 run rqt_joint_trajectory_controller rqt_joint_trajectory_controller
+```
+
+<figure style="text-align: center;">
+    <img src="./doc/rqt_controller.png" alt="UR workcell" width="350">
+    <figcaption>RQT controller tool</figcaption>
+</figure>
+
+This opens a tool to select controllers which are active, and then give joint commands via controller.
 
 ### Run MoveIt
 ```sh
